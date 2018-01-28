@@ -1,0 +1,163 @@
+# git config --global credential.helper wincred
+python manage.py runserver
+（1）	运行R: in R Console
+library(Rserve)
+Rserve(port=6000)
+（2）	运行Python Django: in Powershell
+cd D:\youge_random\ComputeEngine\djangoR\src
+python manage.py runserver
+
+# start R server in R console
+options(encoding='utf-8')
+library(Rserve)
+Rserve(port=6000)
+Rserve(port=6311)
+#Rserve(debug = FALSE, args = NULL, quote=(length(args) > 1))
+
+# for debug
+Rserve(port=6311)
+#Rserve(args="--RS-conf D:\\Projects\\RServe\\DjangoR\\Rscript\\Rserv.cfg")
+R CMD Rserve
+
+# connect to Rserver in python
+import pyRserve, io
+#conn = pyRserve.connect(host='localhost', port=8888)
+conn = pyRserve.connect(host='localhost', port=6311)
+def loadRscript(file):
+    with io.open(file, 'r', encoding='utf8') as f:
+        src=f.read()
+    conn.eval(src)
+
+file = 'randomization\\assets\\randomizeFunction.R'
+with io.open(file, 'r', encoding='utf8') as f:
+    src=f.read()
+
+
+conn.eval(src)
+loadRscript(file=file)        
+# works
+#conn.eval('CompleteRandomization(N=60,K=2,Alloratio=c(1,1),seed=4)')
+result1 = conn.r.CompleteRandomization(N=60,K=2,Alloratio=[1,1],seed=4)
+result2 = conn.r.BlockRandomization(N=60,K=2,Alloratio=[1,1], blocksize=2, seed=4)
+result3 = conn.r.StratifiedCompleteRandomization(N=[20,30,20],K=2,Alloratio=[1,1], seed=4)
+result4 = conn.r.StratifiedBlockRandomization(N=[20,30,20],K=2,Alloratio=[1,1],blocksize=2, seed=4)
+
+
+
+old1=conn.rMinimizationRandomization(K=3,nfactor=3,nlevel=[2,2,3],Alloratio=[1,2,1],seed=1,olddf=null,newdf=newdf)
+
+# list parameter not work, somehow passed into R as string: conn.r.sum([1,2,3]) 
+conn.r.objects()
+conn.eval('1+1')
+conn.eval('rnorm(10)')
+
+## use curl to fetch data
+curl -X get http://127.0.0.1:8000/randomization/test?N=30
+curl -H "Accept: application/json" -H "Content-type: application/json" -X POST -d "{'N': 30}" http://127.0.0.1:8000/randomization/CompleteRandomization
+
+## REST client on browser
+http://127.0.0.1:8000/randomization/CompleteRandomization
+{"N": 60, "K": 2, "alloRatio": [1, 1], "seed": 4}
+
+http://127.0.0.1:8000/randomization/BlockRandomization
+{"N": 60, "alloRatio": [2, 2, 2], "blocksize": 3, "seed": 4}
+
+http://127.0.0.1:8000/randomization/StratifiedCompleteRandomization
+{"N": [20,30,20], "K": 2, "alloRatio": [1, 1], "seed": 4}
+
+http://127.0.0.1:8000/randomization/StratifiedBlockRandomization
+{"N": [20,30,20], "K": 2, "alloRatio": [1, 1], "blocksize": 2, "seed": 4}
+
+http://127.0.0.1:8000/randomization/MinimizationRandomization
+(a)
+{
+  "alloRatio": [1,2,1],
+  "nlevel": [2,2,3],
+  "seed": 1,
+  "markerOld": null,
+  "markerNew": { "patientID": ["a", "b"], "F1": [1, 2], "F2": [2, 1], "F3": [2, 3], "treatment": [ null, null ] }
+}
+(b)
+{
+  "alloRatio": [1,2,1],
+  "nlevel": [2,2,3],
+  "seed": 1,
+  "markerOld": { "patientID": ["a", "b"], "F1": [1, 2], "F2": [2, 1], "F3": [2, 3], "treatment": [ "2", "2" ] },
+  "markerNew": { "patientID": ["3", "4"], "F1": [1, 1], "F2": [2, 1], "F3": [1, 1], "treatment": [ null, null ] }
+}
+(c)
+{
+  "alloRatio": [1,2,1],
+  "nlevel": [2,2,3],
+  "seed": 1,
+  "weight": [2, 1, 3],
+  "markerOld": null,
+  "markerNew": { "patientID": ["a", "b"], "F1": [1, 2], "F2": [2, 1], "F3": [2, 3], "treatment": [ null, null ] }
+}
+(d)
+{
+  "alloRatio": [1,2,1],
+  "nlevel": [2,2,3],
+  "seed": 1,
+  "weight": [2, 1, 3],
+  "markerOld": { "patientID": ["a", "b"], "F1": [1, 2], "F2": [2, 1], "F3": [2, 3], "treatment": [ "2", "2" ] },
+  "markerNew": { "patientID": ["3", "4"], "F1": [1, 1], "F2": [2, 1], "F3": [1, 1], "treatment": [ null, null ] }
+}
+
+########### HTTP request within python: GET/POST
+## in python http get json
+import requests
+import urllib
+<<<<<<< HEAD
+r = requests.get('http://115.28.228.102:82/randomization/test?N=30')
+=======
+import random
+import json
+>>>>>>> e645e2fe7df78ee898f189c631355ecdcceee3a4
+r = requests.get('http://127.0.0.1:8000/randomization/test?N=30')
+r.json()
+
+#CompleteRandomization(N=60,K=2,alloRatio=c(1,1),seed=4)
+# POST can deal with more complicated input
+input = {'N': 60, 'K': 2, 'alloRatio': (1, 1), 'seed': 4}
+url = 'http://127.0.0.1:8000/randomization/CompleteRandomization'
+url = 'http://115.28.228.102:82/randomization/CompleteRandomization'
+r = requests.post(url, json=input)
+r.json()
+
+input = {'K': 3, 'alloRatio': (1, 2, 1), 'nlevel': (2, 2, 3), 'seed': 1, 'markerOld': None, 'markerNew': {'patientID': ['a', 'b'], 'F1': [1, 2], 'F2': [2, 1], 'F3': [2, 3], 'treatment': [None, None]}}
+url = 'http://127.0.0.1:8000/randomization/MinimizationRandomization'
+r = requests.post(url, json=input)
+
+
+for i in range(0, 1000):
+  input = {'N': random.choice([60, 120, 240]), 'K': 2, 'alloRatio': (1, 1), 'seed': random.randint(1, 1000000)}
+  r = requests.post(url, json=input)
+  #print(r.json())
+
+import json
+from collections import OrderedDict
+data1 = """
+{
+  "alloRatio": [1,2,1],
+  "nlevel": [2,2,3],
+  "seed": 1,
+  "markerOld": null,
+  "markerNew": { "patientID": "a", "f1": 1, "f2": 2, "f3": 3, "treatment": null }
+}
+"""
+data2 = """
+{
+  "alloRatio": [1,2,1],
+  "nlevel": [2,2,3],
+  "seed": 1,
+  "markerOld": null,
+  "markerNew": { "patientID": ["a", "b"], "f1": [1, 2], "f2": [2, 1], "f3": [2, 3], "treatment": [ null, null ] }
+}
+"""
+
+d1 = json.loads(data1, object_pairs_hook=OrderedDict)
+d2 = json.loads(data2, object_pairs_hook=OrderedDict)
+
+#null/json ==> None/python ==> NULL/R
+json.loads(data, object_pairs_hook=OrderedDict)

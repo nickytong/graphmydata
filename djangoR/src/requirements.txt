@@ -1,0 +1,4 @@
+Django==1.11
+pyRserve==0.8.4
+jsonfield==2.0.1
+ipdb==0.10.3

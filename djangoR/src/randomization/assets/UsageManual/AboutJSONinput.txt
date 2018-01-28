@@ -1,0 +1,19 @@
+Variables in JSON format (keys) use the following restricted terms for accuracy.
+(1) Single word, special vars: capitalized
+K
+N
+(2) Single word, lower letter
+seed
+weight
+treatment
+F1
+F2
+F3
+nlevel
+nfactor
+(3) More than 2 words, lower camelCase 
+blockSize
+alloRatio
+markerOld
+markerNew
+patientID

@@ -1,0 +1,1 @@
+{"alloRatio": [1, 2, 1], "nlevel": [2, 2, 3], "weight": [2, 1, 3], "markerOld": {"patientID": ["a", "b"], "F1": ["1", "2"], "F2": ["2", "1"], "F3": ["2", "3"], "treatment": ["2", "2"]}, "markerNew": {"patientID": ["c", "d", "e"], "F1": [2, 1, 1], "F2": [1, 2, 1], "F3": [2, 3, 1], "treatment": [null, null, null]}}
