@@ -1,4 +1,8 @@
 Django==1.11
-pyRserve==0.8.4
-jsonfield==2.0.1
+requests==2.18.4
 ipdb==0.10.3
+numpy==1.13.3
+django_jsonfield==1.0.1
+locustio==0.8.1
+pyRserve==0.9.1
+djangorestframework==3.7.7
