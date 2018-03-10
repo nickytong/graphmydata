@@ -6,7 +6,7 @@ This project builds a RESTful web service using Django allowing various statisti
 4. Stratified block randomization
 5. Minimization randomization
 
-The core computation is performed with R and result sent back to Django for web serving. 
+The core computation is performed with R and result sent back to Django for web serving using RServe.  
 
 # Install dependencies
 1. Python related modules   
@@ -32,8 +32,11 @@ python manage.py makemigrations
 python manage.py runserver  
 
 # REST API call
+The web service allow programming access using post request. One can also access the service with a browser using plugins such as chrome Advanced REST client. For example,  
+
 Open browser for the following URL for test  
 1. test by generating rnorm(30): http://127.0.0.1:8000/randomization/test?N=30  
 2. Use Post method. For this, we recommend to install plugins, e.g. chrome Advanced REST client.  
 An screenshot of using the Advanced REST client for complete randomization request is as following.   
 <img src="https://github.com/nickytong/graphmydata/blob/master/djangoR/src/randomization/assets/REST%20API%20using%20chrome%20Advanced%20REST%20extension.png" align="center" height="400" width="600" hspace="30"/>
+
