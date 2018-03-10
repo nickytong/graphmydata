@@ -1,4 +1,12 @@
 # graphmydata
+This project builds a RESTful web service using Django allowing various statistical randomization designs including:
+1. Complete randomization
+2. Stratified complete randomization
+3. Block randomization 
+4. Stratified block randomization
+5. Minimization randomization
+
+The core computation is performed with R and result sent back to Django for web serving. 
 
 # Install dependencies
 1. Python related modules   
