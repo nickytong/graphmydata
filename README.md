@@ -7,6 +7,10 @@ This project builds a RESTful web service using Django allowing various statisti
 5. Minimization randomization
 
 The core computation is performed with R and result sent back to Django for web serving using RServe.  
+Following is how the system works:
+
+
+![system overview](https://github.com/nickytong/graphmydata/blob/master/djangoR/src/randomization/assets/Sysem%20design.png)
 
 # Install dependencies
 1. Python related modules   
