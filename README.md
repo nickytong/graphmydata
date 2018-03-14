@@ -44,3 +44,16 @@ Open browser for the following URL for test
 An screenshot of using the Advanced REST client for complete randomization request is as following.   
 <img src="https://github.com/nickytong/graphmydata/blob/master/djangoR/src/randomization/assets/REST%20API%20using%20chrome%20Advanced%20REST%20extension.png" align="center" height="400" width="600" hspace="30"/>
 
+To access the API by programming, users can use any language supporting POST request. Below is a code snippet to access the API using Python:
+
+```
+import requests
+import urllib
+#CompleteRandomization(N=60,K=2,alloRatio=c(1,1),seed=4)
+# POST can deal with more complicated input
+input = {'N': 60, 'K': 2, 'alloRatio': (1, 1), 'seed': 4}
+url = 'http://127.0.0.1:8000/randomization/CompleteRandomization'
+r = requests.post(url, json=input)
+r.json()
+
+```
