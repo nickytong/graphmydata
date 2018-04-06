@@ -13,6 +13,8 @@ Following is how the system works:
 ![system overview](https://github.com/nickytong/graphmydata/blob/master/djangoR/src/randomization/assets/Sysem%20design.png)
 
 # Install dependencies
+This project is developed on a Windows machine with Python 3.
+
 1. Python related modules   
 cd djangoR/src  
 pip install -r requirements.txt  
