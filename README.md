@@ -1,5 +1,5 @@
 # graphmydata
-This project builds a RESTful web service using Django allowing various statistical randomization designs including:
+This project builds a RESTful web service using Django allowing API calls for various statistical randomization designs including:
 1. Complete randomization
 2. Stratified complete randomization
 3. Block randomization 
